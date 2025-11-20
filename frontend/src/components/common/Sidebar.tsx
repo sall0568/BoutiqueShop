@@ -1,19 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  ReceiptText,
+  Receipt,
   Boxes,
   Users,
   Settings,
   LogOut,
   Menu,
   FolderOpen,
-} from "lucide-react";
-import { useUIStore } from "../../store/uiStore";
-import { useAuthStore } from "../../store/authStore";
-import { clsx } from "clsx";
+} from 'lucide-react';
+import { useUIStore } from '../../store/uiStore';
+import { useAuthStore } from '../../store/authStore';
+import { clsx } from 'clsx';
 
 export default function Sidebar() {
   const location = useLocation();
@@ -23,18 +23,14 @@ export default function Sidebar() {
   const isActive = (path: string) => location.pathname === path;
 
   const menuItems = [
-    { label: "Tableau de bord", path: "/", icon: LayoutDashboard },
-    { label: "Produits", path: "/products", icon: Package },
-    { label: "Catégories", path: "/categories", icon: FolderOpen },
-    { label: "Ventes", path: "/sales", icon: ShoppingCart },
-    { label: "Dépenses", path: "/expenses", icon: ReceiptText },
-    { label: "Stock", path: "/stock", icon: Boxes },
-    ...(user?.role === "ADMIN"
-      ? [{ label: "Utilisateurs", path: "/users", icon: Users }]
-      : []),
-    ...(user?.role === "ADMIN"
-      ? [{ label: "Paramètres", path: "/settings", icon: Settings }]
-      : []),
+    { label: 'Tableau de bord', path: '/', icon: LayoutDashboard },
+    { label: 'Produits', path: '/products', icon: Package },
+    { label: 'Catégories', path: '/categories', icon: FolderOpen },
+    { label: 'Ventes', path: '/sales', icon: ShoppingCart },
+    { label: 'Dépenses', path: '/expenses', icon: Receipt },
+    { label: 'Stock', path: '/stock', icon: Boxes },
+    ...(user?.role === 'ADMIN' ? [{ label: 'Utilisateurs', path: '/users', icon: Users }] : []),
+    ...(user?.role === 'ADMIN' ? [{ label: 'Paramètres', path: '/settings', icon: Settings }] : []),
   ];
 
   return (
@@ -58,19 +54,17 @@ export default function Sidebar() {
       {/* Sidebar */}
       <aside
         className={clsx(
-          "fixed top-0 left-0 h-full bg-white border-r border-gray-200 z-40",
-          "transition-transform duration-300 ease-in-out",
-          "w-64",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+          'fixed top-0 left-0 h-full bg-white border-r border-gray-200 z-40',
+          'transition-transform duration-300 ease-in-out',
+          'w-64',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         )}
       >
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-gray-200">
             <h1 className="text-xl font-bold text-blue-600">SaaS Gestion</h1>
-            <p className="text-xs text-gray-500 mt-1">
-              Boutiques & Petits Commerce
-            </p>
+            <p className="text-xs text-gray-500 mt-1">Boutiques & Petits Commerce</p>
           </div>
 
           {/* Menu */}
@@ -83,10 +77,10 @@ export default function Sidebar() {
                   to={item.path}
                   onClick={() => sidebarOpen && toggleSidebar()}
                   className={clsx(
-                    "flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors",
+                    'flex items-center gap-3 px-4 py-2.5 rounded-lg transition-colors',
                     isActive(item.path)
-                      ? "bg-blue-50 text-blue-600 font-medium"
-                      : "text-gray-700 hover:bg-gray-50"
+                      ? 'bg-blue-50 text-blue-600 font-medium'
+                      : 'text-gray-700 hover:bg-gray-50'
                   )}
                 >
                   <Icon size={20} />
@@ -108,7 +102,7 @@ export default function Sidebar() {
             <button
               onClick={() => {
                 logout();
-                window.location.href = "/login";
+                window.location.href = '/login';
               }}
               className="w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
             >

@@ -1,5 +1,6 @@
 // src/services/expenses.service.ts
 import { Expense } from '../types';
+import { apiClient, ApiResponse } from './api';
 
 export interface CreateExpensePayload {
   description: string;

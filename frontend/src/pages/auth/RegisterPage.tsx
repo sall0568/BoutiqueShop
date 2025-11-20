@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import { Mail, Lock, User, Store, Phone } from "lucide-react";
-import Input from "../../components/common/Input";
-import Button from "../../components/common/Button";
-import Card from "../../components/common/Card";
-import { authService } from "../../services/auth.service";
-import { useAuthStore } from "../../store/authStore";
-import { useUIStore } from "../../store/uiStore";
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import { Mail, Lock, Store, Phone } from 'lucide-react'; // ✅ Supprimé 'User'
+import Input from '../../components/common/Input';
+import Button from '../../components/common/Button';
+import Card from '../../components/common/Card';
+import { authService } from '../../services/auth.service';
+import { useAuthStore } from '../../store/authStore';
+import { useUIStore } from '../../store/uiStore';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
@@ -15,27 +15,37 @@ export default function RegisterPage() {
   const { showNotification } = useUIStore();
 
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-    firstName: "",
-    lastName: "",
-    phone: "",
-    storeName: "",
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    storeName: '',
   });
 
   const { mutate: register, isPending } = useMutation({
     mutationFn: () => authService.register(formData),
     onSuccess: async (data) => {
-      const userData = await authService.getCurrentUser();
-      setAuth(data.user, userData.store, data.token);
-      showNotification("success", "Inscription réussie");
-      navigate("/");
+      if (!data) {
+        showNotification('error', 'Erreur: pas de données reçues');
+        return;
+      }
+
+      try {
+        const userData = await authService.getCurrentUser();
+        if (userData?.store) {
+          setAuth(data.user, userData.store, data.token);
+          showNotification('success', 'Inscription réussie');
+          navigate('/');
+        } else {
+          showNotification('error', 'Erreur lors du chargement des données');
+        }
+      } catch (error) {
+        showNotification('error', 'Erreur lors du chargement des données utilisateur');
+      }
     },
     onError: (error: any) => {
-      showNotification(
-        "error",
-        error.response?.data?.error || "Erreur d'inscription"
-      );
+      showNotification('error', error.response?.data?.error || "Erreur d'inscription");
     },
   });
 
@@ -53,9 +63,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center p-4">
       <Card className="w-full max-w-lg">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-blue-600 mb-2">
-            SaaS Gestion
-          </h1>
+          <h1 className="text-3xl font-bold text-blue-600 mb-2">SaaS Gestion</h1>
           <p className="text-gray-600">Créer une nouvelle boutique</p>
         </div>
 
@@ -127,11 +135,8 @@ export default function RegisterPage() {
 
         <div className="mt-6 text-center">
           <p className="text-gray-600 text-sm">
-            Déjà inscrit?{" "}
-            <Link
-              to="/login"
-              className="text-blue-600 hover:underline font-medium"
-            >
+            Déjà inscrit?{' '}
+            <Link to="/login" className="text-blue-600 hover:underline font-medium">
               Se connecter
             </Link>
           </p>

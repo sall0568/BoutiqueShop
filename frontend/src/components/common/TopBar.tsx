@@ -1,12 +1,12 @@
-import { Bell, User, LogOut, Settings } from "lucide-react";
-import { useAuthStore } from "../../store/authStore";
+import { Bell, LogOut, Settings } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
 
 export default function TopBar() {
   const { user, store, logout } = useAuthStore();
 
   const handleLogout = () => {
     logout();
-    window.location.href = "/login";
+    window.location.href = '/login';
   };
 
   return (

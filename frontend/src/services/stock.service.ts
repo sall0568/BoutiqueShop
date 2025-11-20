@@ -1,5 +1,6 @@
 // src/services/stock.service.ts
 import { StockMovement, StockValue, StockAlerts } from '../types';
+import { apiClient, ApiResponse } from './api';
 
 export interface CreateMovementPayload {
   type: 'IN' | 'OUT' | 'ADJUSTMENT';

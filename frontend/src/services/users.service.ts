@@ -1,5 +1,6 @@
 // src/services/users.service.ts
 import { User } from '../types';
+import { apiClient, ApiResponse } from './api'; 
 
 export interface CreateUserPayload {
   email: string;

@@ -1,5 +1,6 @@
 // src/services/stores.service.ts
 import { Store } from '../types';
+import { apiClient, ApiResponse } from './api';
 
 export interface UpdateStorePayload {
   name?: string;

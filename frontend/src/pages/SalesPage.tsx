@@ -20,7 +20,8 @@ export default function SalesPage() {
     queryFn: () => salesService.getAll({ startDate, endDate }),
   });
 
-  const { mutate: deleteSale } = useMutation({
+  // ✅ Utiliser deleteSale ou supprimer la mutation
+  useMutation({
     mutationFn: (id: string) => salesService.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['sales'] });
